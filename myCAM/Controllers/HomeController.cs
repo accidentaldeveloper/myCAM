@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using myCAM.Models;
 
 namespace myCAM.Controllers
 {
@@ -10,7 +11,12 @@ namespace myCAM.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new HomeModel()
+            {
+                UserGalleries = new List<GalleryModel> { new GalleryModel()}
+            };
+
+            return View(model);
         }
 
         public ActionResult About()
