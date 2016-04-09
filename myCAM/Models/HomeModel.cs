@@ -10,5 +10,6 @@ namespace myCAM.Models
 
     public class GalleryModel
     {
+        ////public Type { get; set; }
     }
 }
