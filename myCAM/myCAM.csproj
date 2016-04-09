@@ -210,12 +210,23 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\Gallery.cs" />
+    <Compile Include="DAL\GalleryItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604091517031_InitialCreate.cs" />
+    <Compile Include="Migrations\201604091517031_InitialCreate.Designer.cs">
+      <DependentUpon>201604091517031_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604092152319_AddGalleries.cs" />
+    <Compile Include="Migrations\201604092152319_AddGalleries.Designer.cs">
+      <DependentUpon>201604092152319_AddGalleries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="DAL\ApplicationDbContext.cs" />
+    <Compile Include="DAL\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -308,6 +319,14 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604091517031_InitialCreate.resx">
+      <DependentUpon>201604091517031_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604092152319_AddGalleries.resx">
+      <DependentUpon>201604092152319_AddGalleries.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
