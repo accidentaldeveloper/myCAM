@@ -13,7 +13,7 @@ namespace myCAM.Migrations
                     {
                         GalleryId = c.Int(nullable: false, identity: true),
                         ApplicationUserId = c.String(nullable: false, maxLength: 128),
-                        Title = c.String(nullable: false, maxLength:256),
+                        Title = c.String(nullable: false, maxLength: 256),
                         Description = c.String(),
                     })
                 .PrimaryKey(t => t.GalleryId)
