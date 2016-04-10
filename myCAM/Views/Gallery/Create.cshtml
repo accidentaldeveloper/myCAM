@@ -1,21 +1,11 @@
 ﻿@model myCAM.Models.CreateGalleryModel
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>Create Gallery</title>
-</head>
-<body>
 <div>
-    <h1>Gallery Theme</h1>
-    @Html.TextBoxFor(model => model.Title)
-    <label>What do you want to say about these items?</label>
+    <h1>Create Gallery</h1>
+    <label>
+        Gallery Theme
+        @Html.TextBoxFor(model => model.Title)
+    </label>
+    <label>Description (Optional)</label>
     @Html.TextAreaFor(x => x.Description)
 </div>
-</body>
-</html>
