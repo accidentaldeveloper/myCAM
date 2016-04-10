@@ -1,4 +1,4 @@
-﻿@model myCAM.Models.GalleryModel
+﻿@model myCAM.Models.CreateGalleryModel
 
 @{
     Layout = null;
@@ -12,7 +12,10 @@
 </head>
 <body>
 <div>
-      
+    <h1>Gallery Theme</h1>
+    @Html.TextBoxFor(model => model.Title)
+    <label>What do you want to say about these items?</label>
+    @Html.TextAreaFor(x => x.Description)
 </div>
 </body>
 </html>
