@@ -28,12 +28,44 @@ namespace myCAM.Controllers
             return View(galleryModel);
         }
 
+        public async Task<ActionResult> My()
+        {
+            IEnumerable<GalleryViewModel> myGalleries = await GetMyGalleries();
+            return View(myGalleries);
+        }
+
+        private async Task<IEnumerable<GalleryViewModel>> GetMyGalleries()
+        {
+            var currentUserId = User.Identity.GetUserId();
+            ////var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            ////var currentUser = manager.FindById(currentUserId);
+
+            var context = new ApplicationDbContext();
+            var galleriesQuery = from g in context.Galleries
+                                 where g.ApplicationUserId == currentUserId
+                                 select new GalleryViewModel
+                                 {
+                                     Title = g.Title,
+                                     Description = g.Description,
+                                     Items = g.GalleryItems.Select(gi => new GalleryItemInfo
+                                     {
+                                         ItemId = gi.ItemId,
+                                         Note = gi.Note
+                                     })
+                                 };
+            var galleries = galleriesQuery.ToList();
+            var surl = await GetSurl();
+            foreach (var galleryViewModel in galleries)
+            {
+                await GetItemDataForGallery(galleryViewModel, surl);
+            }
+            return galleries;
+        }
+
         private async Task<GalleryViewModel> RetrieveGalleryViewModel(int galleryId)
         {
             var context = new ApplicationDbContext();
             var currentUserId = User.Identity.GetUserId();
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-            var currentUser = manager.FindById(currentUserId);
 
             var galleryQuery = context.Galleries.Where(x => x.GalleryId == galleryId).Select(g => new GalleryViewModel
             {
@@ -48,26 +80,28 @@ namespace myCAM.Controllers
 
             var gallery = galleryQuery.Single();
             var surl = await GetSurl();
-            foreach (var galleryItemInfo in gallery.Items)
-            {
-
-                var request = new ImageDataRequest(galleryItemInfo.ItemId);
-                var rawData = await request.GetItemData(surl);
-                var goodData = GoodItemData.CreateFromItemInformation(rawData);
-                galleryItemInfo.Name = goodData.Name;
-                galleryItemInfo.Artist = goodData.Artist;
-                galleryItemInfo.ImageUrl = goodData.ImageUrl;
-            }
+            await GetItemDataForGallery(gallery, surl);
 
             return gallery;
-            ////var galleries = from user in context.Users
-            ////                where user.Id == currentUserId
-            ////                let userGalleryModels = from g in user.Galleries
-            ////                                        select new 
-            ////                select new GalleryViewModel
-            ////                {
-            ////                    Title = 
-            ////                };
+        }
+
+        private static async Task GetItemDataForGallery(GalleryViewModel gallery, string surl)
+        {
+            foreach (var galleryItemInfo in gallery.Items)
+            {
+                galleryItemInfo.GoodItemData = await GetItemData(surl, galleryItemInfo.ItemId);
+            }
+        }
+
+        private static async Task<GoodItemData> GetItemData(string surl, int itemId)
+        {
+            var request = new ImageDataRequest(itemId);
+            var rawData = await request.GetItemData(surl);
+            var goodData = GoodItemData.CreateFromItemInformation(rawData);
+            return goodData;
+            ////galleryItemInfo.Name = goodData.Name;
+            ////galleryItemInfo.Artist = goodData.Artist;
+            ////galleryItemInfo.ImageUrl = goodData.ImageUrl;
         }
 
         public static Task<string> GetSurl()

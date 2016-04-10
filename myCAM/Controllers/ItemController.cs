@@ -23,7 +23,7 @@ namespace myCAM.Controllers
             var request = new ImageDataRequest(id);
             var rawData = await request.GetItemData(surl);
             var goodData = GoodItemData.CreateFromItemInformation(rawData);
-            return View();
+            return View(goodData);
         }
 
         // GET: Item/Create

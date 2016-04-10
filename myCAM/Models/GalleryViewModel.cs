@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using myCAM.Queries;
 
 namespace myCAM.Models
 {
@@ -17,6 +18,8 @@ namespace myCAM.Models
     public class GalleryItemInfo
     {
         public int ItemId { get; set; }
+
+        public GoodItemData GoodItemData { get; set; }
 
         public string Name { get; set; }
 
