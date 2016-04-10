@@ -1,0 +1,10 @@
+﻿@model myCAM.Models.GalleryViewModel
+<div>
+    @this.Model.Title
+    @Model.Description
+    @foreach (var galleryItemInfo in Model.Items)
+    {
+        @galleryItemInfo.ItemId
+        <img src="@galleryItemInfo.ImageUrl"/>
+    }
+</div>

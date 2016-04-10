@@ -209,6 +209,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Migrations\201604100036570_AddUserName.cs" />
     <Compile Include="Migrations\201604100036570_AddUserName.Designer.cs">
       <DependentUpon>201604100036570_AddUserName.cs</DependentUpon>
@@ -240,6 +241,8 @@
     <Compile Include="Queries\GoodItemData.cs" />
     <Compile Include="Queries\ImageDataRequest.cs" />
     <Compile Include="Queries\PictionApiModels\ItemInformation.cs" />
+    <Compile Include="Queries\PictionApiModels\PictionResponse.cs" />
+    <Compile Include="Queries\SurlRequest.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +322,8 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <None Include="Views\Gallery\Create.cshtml" />
+    <Content Include="Views\Gallery\Index.cshtml" />
+    <Content Include="Views\Item\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

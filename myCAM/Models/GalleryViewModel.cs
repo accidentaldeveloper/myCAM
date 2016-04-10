@@ -18,6 +18,14 @@ namespace myCAM.Models
     {
         public int ItemId { get; set; }
 
+        public string Name { get; set; }
+
+        public string Artist { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public string ThumbnailUrl { get; set; }
+        
         public string Note { get; set; }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using myCAM.DAL;
 using myCAM.Models;
+using myCAM.Queries;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -13,19 +16,19 @@ namespace myCAM.Controllers
     public class GalleryController : Controller
     {
         // GET: Gallery
-        public ActionResult Index()
-        {
-            return View();
-        }
+        ////public ActionResult Index()
+        ////{
+        ////    return View();
+        ////}
 
         // GET: Gallery/5
-        public ActionResult Index(int id)
+        public async Task<ActionResult> Index(int id)
         {
-            var galleryModel = RetrieveGalleryViewModel(id);
+            var galleryModel = await RetrieveGalleryViewModel(id);
             return View(galleryModel);
         }
 
-        private GalleryViewModel RetrieveGalleryViewModel(int galleryId)
+        private async Task<GalleryViewModel> RetrieveGalleryViewModel(int galleryId)
         {
             var context = new ApplicationDbContext();
             var currentUserId = User.Identity.GetUserId();
@@ -44,6 +47,18 @@ namespace myCAM.Controllers
             });
 
             var gallery = galleryQuery.Single();
+            var surl = await GetSurl();
+            foreach (var galleryItemInfo in gallery.Items)
+            {
+
+                var request = new ImageDataRequest(galleryItemInfo.ItemId);
+                var rawData = await request.GetItemData(surl);
+                var goodData = GoodItemData.CreateFromItemInformation(rawData);
+                galleryItemInfo.Name = goodData.Name;
+                galleryItemInfo.Artist = goodData.Artist;
+                galleryItemInfo.ImageUrl = goodData.ImageUrl;
+            }
+
             return gallery;
             ////var galleries = from user in context.Users
             ////                where user.Id == currentUserId
@@ -53,6 +68,12 @@ namespace myCAM.Controllers
             ////                {
             ////                    Title = 
             ////                };
+        }
+
+        public static Task<string> GetSurl()
+        {
+            return SurlRequest.GetSurl(ConfigurationManager.AppSettings["CamApiUserName"],
+                ConfigurationManager.AppSettings["CamApiPassword"]);
         }
 
         // GET: Gallery/Create

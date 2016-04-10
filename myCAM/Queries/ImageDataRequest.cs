@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using myCAM.Queries.PictionApiModels;
 using Newtonsoft.Json;
@@ -22,8 +23,8 @@ namespace myCAM.Queries
             {
                 var responseMessage = await client.GetAsync(url);
                 var theBody = await responseMessage.Content.ReadAsStringAsync();
-                var myStuff = JsonConvert.DeserializeObject<ItemInformation>(theBody);
-                return myStuff;
+                var myStuff = JsonConvert.DeserializeObject<PictionResponse>(theBody);
+                return myStuff.Results.Single();
             }
         }
     }
