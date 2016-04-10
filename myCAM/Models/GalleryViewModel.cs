@@ -6,7 +6,7 @@ namespace myCAM.Models
 {
     public class GalleryViewModel
     {
-
+        public int GalleryId { get; set; }
 
         public string Title { get; set; }
 

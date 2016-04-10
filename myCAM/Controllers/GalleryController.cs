@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -34,7 +35,13 @@ namespace myCAM.Controllers
             return View(myGalleries);
         }
 
-        private async Task<IEnumerable<GalleryViewModel>> GetMyGalleries()
+        public async Task<PartialViewResult> AddToGalleryDialog()
+        {
+            var myGalleries = await GetMyGalleries(true);
+            return PartialView(myGalleries);
+        }
+
+        private async Task<IEnumerable<GalleryViewModel>> GetMyGalleries(bool skipItemData = false)
         {
             var currentUserId = User.Identity.GetUserId();
             ////var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -45,6 +52,7 @@ namespace myCAM.Controllers
                                  where g.ApplicationUserId == currentUserId
                                  select new GalleryViewModel
                                  {
+                                     GalleryId = g.GalleryId,
                                      Title = g.Title,
                                      Description = g.Description,
                                      Items = g.GalleryItems.Select(gi => new GalleryItemInfo
@@ -53,7 +61,12 @@ namespace myCAM.Controllers
                                          Note = gi.Note
                                      })
                                  };
-            var galleries = galleriesQuery.ToList();
+            var galleries = await galleriesQuery.ToListAsync();
+            if (skipItemData)
+            {
+                return galleries;
+            }
+
             var surl = await GetSurl();
             foreach (var galleryViewModel in galleries)
             {

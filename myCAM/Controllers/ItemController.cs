@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using myCAM.DAL;
 using myCAM.Queries;
 
 namespace myCAM.Controllers
@@ -24,6 +25,22 @@ namespace myCAM.Controllers
             var rawData = await request.GetItemData(surl);
             var goodData = GoodItemData.CreateFromItemInformation(rawData);
             return View(goodData);
+        }
+
+        public ActionResult AddToGallery(int itemId, int galleryId)
+        {
+            var db = new ApplicationDbContext();
+            var gallery = db.Galleries.Find(galleryId);
+            var itemCount = gallery.GalleryItems.Count();
+            if (itemCount >= 5)
+            {
+                return this.HttpNotFound();
+            }
+
+            gallery.GalleryItems.Add(new GalleryItem { GalleryId = galleryId, ItemId = itemId });
+            db.SaveChanges();
+            return this.Json(new {success = true});
+            return this.RedirectToAction("Index", "Gallery", new {id = galleryId});
         }
 
         // GET: Item/Create
@@ -75,6 +92,8 @@ namespace myCAM.Controllers
         {
             return View();
         }
+
+
 
         // POST: Item/Delete/5
         [HttpPost]

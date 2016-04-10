@@ -1,0 +1,10 @@
+﻿@model System.Collections.Generic.IEnumerable<myCAM.Models.GalleryViewModel>
+
+
+<div class="btn-group-vertical" role="group" >
+@foreach (var galleryViewModel in Model)
+{
+    var count = galleryViewModel.Items.Count();
+    <button type="button" class="btn btn-default" data-gallery-id="@galleryViewModel.GalleryId">@galleryViewModel.Title (@count items)</button>
+}
+</div>

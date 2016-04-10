@@ -321,6 +321,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
+    <Content Include="Views\Gallery\AddToGalleryDialog.cshtml" />
     <None Include="Views\Gallery\Create.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Item\Details.cshtml" />
