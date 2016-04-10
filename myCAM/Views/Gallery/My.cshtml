@@ -3,4 +3,8 @@
 @foreach (var galleryViewModel in Model)
 {
     @galleryViewModel.Title
+    foreach (var galleryItemInfo in galleryViewModel.Items)
+    {
+        <img src="@galleryItemInfo.GoodItemData.ThumbnailUrl" />
+    }
 }
