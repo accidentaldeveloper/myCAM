@@ -131,13 +131,22 @@ namespace myCAM.Controllers
 
         // POST: Gallery/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CreateGalleryModel model)
         {
             try
             {
                 // TODO: Add insert logic here
+                var newGallery = new Gallery
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ApplicationUserId = this.User.Identity.GetUserId()
+                };
+                var db = new ApplicationDbContext();
+                db.Galleries.Add(newGallery);
+                db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = newGallery.GalleryId });
             }
             catch
             {

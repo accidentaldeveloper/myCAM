@@ -4,7 +4,7 @@
     @Model.Description
     @foreach (var galleryItemInfo in Model.Items)
     {
-        @galleryItemInfo.ItemId
-        <img src="@galleryItemInfo.ImageUrl"/>
+        @galleryItemInfo.GoodItemData.Name
+        <img src="@galleryItemInfo.GoodItemData.ImageUrl"/>
     }
 </div>

@@ -1,11 +1,14 @@
 ﻿@model myCAM.Models.CreateGalleryModel
 
-<div>
+<form action="/Gallery/Create" method="post">
     <h1>Create Gallery</h1>
     <label>
-        Gallery Theme
+        Theme<br/>
         @Html.TextBoxFor(model => model.Title)
     </label>
-    <label>Description (Optional)</label>
-    @Html.TextAreaFor(x => x.Description)
-</div>
+    <div>
+        <label>Description (Optional)</label><br/>
+        @Html.TextAreaFor(x => x.Description)
+    </div>
+    <button type="submit">Submit</button>
+</form>
