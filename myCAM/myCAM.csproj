@@ -209,6 +209,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Migrations\201604100036570_AddUserName.cs" />
+    <Compile Include="Migrations\201604100036570_AddUserName.Designer.cs">
+      <DependentUpon>201604100036570_AddUserName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\GalleryViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -332,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604092152319_AddGalleries.resx">
       <DependentUpon>201604092152319_AddGalleries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604100036570_AddUserName.resx">
+      <DependentUpon>201604100036570_AddUserName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

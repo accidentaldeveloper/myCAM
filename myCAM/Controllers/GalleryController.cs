@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using myCAM.DAL;
 using myCAM.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace myCAM.Controllers
 {
@@ -19,13 +21,38 @@ namespace myCAM.Controllers
         // GET: Gallery/5
         public ActionResult Index(int id)
         {
-            var galleryModel = RetrieveGalleryViewModel(this.User.Identity.GetUserId());
+            var galleryModel = RetrieveGalleryViewModel(id);
             return View(galleryModel);
         }
 
-        private GalleryViewModel RetrieveGalleryViewModel(string getUserId)
+        private GalleryViewModel RetrieveGalleryViewModel(int galleryId)
         {
-            throw new NotImplementedException();
+            var context = new ApplicationDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = manager.FindById(currentUserId);
+
+            var galleryQuery = context.Galleries.Where(x => x.GalleryId == galleryId).Select(g => new GalleryViewModel
+            {
+                Title = g.Title,
+                Description = g.Description,
+                Items = g.GalleryItems.Select(gi => new GalleryItemInfo
+                {
+                    ItemId = gi.ItemId,
+                    Note = gi.Note
+                })
+            });
+
+            var gallery = galleryQuery.Single();
+            return gallery;
+            ////var galleries = from user in context.Users
+            ////                where user.Id == currentUserId
+            ////                let userGalleryModels = from g in user.Galleries
+            ////                                        select new 
+            ////                select new GalleryViewModel
+            ////                {
+            ////                    Title = 
+            ////                };
         }
 
         // GET: Gallery/Create

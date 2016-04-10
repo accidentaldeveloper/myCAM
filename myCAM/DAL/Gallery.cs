@@ -16,7 +16,7 @@ namespace myCAM.DAL
 
         public string Description { get; set; }
 
-        public virtual ICollection<GalleryItem> Posts { get; set; } = new HashSet<GalleryItem>();
+        public virtual ICollection<GalleryItem> GalleryItems { get; set; } = new HashSet<GalleryItem>();
 
         public ApplicationUser ApplicationUser { get; set; }
     }

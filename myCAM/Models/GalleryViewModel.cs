@@ -18,6 +18,6 @@ namespace myCAM.Models
     {
         public int ItemId { get; set; }
 
-        public string Notes { get; set; }
+        public string Note { get; set; }
     }
 }
